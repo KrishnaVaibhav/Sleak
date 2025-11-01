@@ -1,0 +1,30 @@
+[package]
+name = "sleak_windows"
+version = "0.1.0"
+description = "Windows stealth overlay client for Sleak"
+authors = ["VaibhaV"]
+license = "MIT"
+edition = "2021"
+rust-version = "1.74"
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+tauri = { version = "1.5", features = [ "window-all", "global-shortcut-all", "system-tray"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+anyhow = "1.0"
+once_cell = "1.19"
+windows = { version = "0.39", features = [
+  "Win32_Foundation",
+  "Win32_UI_WindowsAndMessaging",
+  "Win32_UI_Input_KeyboardAndMouse",
+  "Win32_System_SystemInformation",
+  "Win32_Graphics_Dwm",
+  "Win32_Graphics_Gdi"
+] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
