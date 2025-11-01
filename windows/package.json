@@ -1,0 +1,14 @@
+{
+  "name": "sleak-windows",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Sleak Windows stealth overlay client built on Tauri.",
+  "scripts": {
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "start": "tauri dev"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.5.11"
+  }
+}
