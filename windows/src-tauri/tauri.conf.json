@@ -12,7 +12,11 @@
   },
   "tauri": {
     "systemTray": {
+<<<<<<< HEAD
       "iconPath": "icons/icon.ico",
+=======
+      "iconPath": "",
+>>>>>>> 35901998746db34b7ec079451bcf8fbe75442523
       "iconAsTemplate": true
     },
     "allowlist": {
@@ -49,7 +53,11 @@
         "transparent": true,
         "decorations": false,
         "alwaysOnTop": true,
+<<<<<<< HEAD
         "visible": true,
+=======
+        "visible": false,
+>>>>>>> 35901998746db34b7ec079451bcf8fbe75442523
         "skipTaskbar": true
       }
     ],

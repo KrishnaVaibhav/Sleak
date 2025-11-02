@@ -1,14 +1,25 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+<<<<<<< HEAD
 use tauri::{GlobalShortcutManager, Manager, Window};
+=======
+use tauri::{Manager, Window};
+>>>>>>> 35901998746db34b7ec079451bcf8fbe75442523
 
 #[cfg(target_os = "windows")]
 mod windows_overlay;
 
+<<<<<<< HEAD
+=======
+#[cfg(target_os = "windows")]
+use tauri::WindowExtWindows;
+
+>>>>>>> 35901998746db34b7ec079451bcf8fbe75442523
 #[tauri::command]
 fn toggle_overlay(window: Window) -> Result<(), String> {
     #[cfg(target_os = "windows")]
     {
+<<<<<<< HEAD
         let hwnd = window.hwnd().map_err(|e| e.to_string())?;
 
         if windows_overlay::is_dimmed() {
@@ -18,6 +29,19 @@ fn toggle_overlay(window: Window) -> Result<(), String> {
         }
         let _ = window.show();
         let _ = window.set_focus();
+=======
+        let hwnd = window.hwnd();
+
+        let is_visible = window.is_visible().unwrap_or(false);
+        if is_visible {
+            windows_overlay::hide_overlay(hwnd).map_err(|e| e.to_string())?;
+            let _ = window.hide();
+        } else {
+            windows_overlay::show_overlay(hwnd).map_err(|e| e.to_string())?;
+            let _ = window.show();
+            let _ = window.set_focus();
+        }
+>>>>>>> 35901998746db34b7ec079451bcf8fbe75442523
     }
 
     Ok(())
@@ -27,8 +51,13 @@ fn toggle_overlay(window: Window) -> Result<(), String> {
 fn enable_overlay(window: Window) -> Result<(), String> {
     #[cfg(target_os = "windows")]
     {
+<<<<<<< HEAD
         let hwnd = window.hwnd().map_err(|e| e.to_string())?;
         windows_overlay::hide_overlay(hwnd).map_err(|e| e.to_string())?;
+=======
+        let hwnd = window.hwnd();
+        windows_overlay::show_overlay(hwnd).map_err(|e| e.to_string())?;
+>>>>>>> 35901998746db34b7ec079451bcf8fbe75442523
         let _ = window.show();
     }
     Ok(())
@@ -38,9 +67,15 @@ fn enable_overlay(window: Window) -> Result<(), String> {
 fn disable_overlay(window: Window) -> Result<(), String> {
     #[cfg(target_os = "windows")]
     {
+<<<<<<< HEAD
         let hwnd = window.hwnd().map_err(|e| e.to_string())?;
         windows_overlay::show_overlay(hwnd).map_err(|e| e.to_string())?;
         let _ = window.show();
+=======
+        let hwnd = window.hwnd();
+        windows_overlay::hide_overlay(hwnd).map_err(|e| e.to_string())?;
+        let _ = window.hide();
+>>>>>>> 35901998746db34b7ec079451bcf8fbe75442523
     }
     Ok(())
 }
@@ -56,6 +91,7 @@ fn main() {
             #[cfg(target_os = "windows")]
             {
                 if let Some(window) = app.get_window("overlay") {
+<<<<<<< HEAD
                     let hwnd = window.hwnd()?;
                     windows_overlay::apply_overlay_hints(hwnd)?;
                     #[cfg(debug_assertions)]
@@ -77,6 +113,22 @@ fn main() {
             }
             Ok(())
         })
+=======
+                    let hwnd = window.hwnd();
+                    windows_overlay::apply_overlay_hints(hwnd)?;
+                    windows_overlay::register_toggle_hotkey(hwnd)?;
+                }
+            }
+            Ok(())
+        })
+        .on_window_event(|event| {
+            #[cfg(target_os = "windows")]
+            if let tauri::WindowEvent::Destroyed = event.event() {
+                let hwnd = event.window().hwnd();
+                windows_overlay::unregister_toggle_hotkey(hwnd);
+            }
+        })
+>>>>>>> 35901998746db34b7ec079451bcf8fbe75442523
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
